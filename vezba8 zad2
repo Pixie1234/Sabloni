@@ -1,0 +1,80 @@
+/* Да се имплементира маил клиент каде покрај секоја порака ќе има опција пораката да се означи, 
+а подоцна сите означени пораки да може да се избришат при клик на копче.
+Да се имплементира можност за враќање на избришаните пораки. */
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../jquery-ui.css">
+    <script src="../jquery.js"></script>
+    <script src="../jquery-ui.js"></script>
+
+
+    <style>
+        /*.tr-hover{
+            cursor:pointer;
+            background-color: #1c94c4;
+
+        }*/
+        .row-selected{
+            background:red;
+        }
+
+        tr:hover {
+            cursor: pointer;
+            background-color: whitesmoke;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            //console.log($("input [type=checkbox]"));
+
+            $('input[type=checkbox]').on('change', function () {
+                if ($(this).is(':checked')) {
+                    //console.log(this);
+                    /*во <html> мора <table cellspacing="0" да има
+                       и мора да има value означено, value и id  се исти*/
+                    $("#" + $(this).attr("value")).css('background-color', "red");
+                } else {
+                    $("#" + $(this).attr("value")).css('background-color', "#fff");
+                }
+            });
+
+           //Find and remove selected table rows
+            $("#delete").click(function () {
+                // console.log($("#table input:checked"));
+               // console.log($("#table input:checked").length);
+
+                if ($("#table input:checked").length == 0) {
+                    alert("No mails selected");
+                } else {
+                    $("tr :checked").parent().parent().hide();
+                }
+            });
+
+            $("#restore").click(function () {
+
+                $("tr :checked").parent().parent().show();
+
+            });
+        });
+    </script>
+
+</head>
+<body>
+<button id="delete">delete</button>
+<button id="restore">restore</button>
+<table cellspacing="0" id="table">
+    <tr id="0"><td><input type="checkbox" value="0"></td><td>Sender 1</td><td>Subject 1</td> </tr>
+    <tr id="1"><td><input type="checkbox" value="1"></td><td>Sender 2</td><td>Subject 2</td></tr>
+    <tr id="2"><td><input type="checkbox" value="2"></td><td>Sender 3</td><td>Subject 3</td></tr>
+    <tr id="3"><td><input type="checkbox" value="3"></td><td>Sender 4</td><td>Subject 4</td></tr>
+    <tr id="4"><td><input type="checkbox" value="4"></td><td>Sender 5</td><td>Subject 5</td></tr>
+    <tr id="5"><td><input type="checkbox" value="5"></td><td>Sender 6</td><td>Subject 6</td></tr>
+    <tr id="6"><td><input type="checkbox" value="6"></td><td>Sender 7</td><td>Subject 7</td></tr>
+    <tr id="7"><td><input type="checkbox" value="7"></td><td>Sender 8</td><td>Subject 8</td></tr>
+</table>
+</body>
+</html>

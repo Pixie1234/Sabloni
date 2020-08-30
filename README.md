@@ -1,6 +1,6 @@
 # Sabloni
 
-<h2>Useful things</h2>
+<h2>Useful things:</h2>
 
 https://www.youtube.com/watch?v=fEYx8dQr_cQ -> Ajax i Json ubavo prakticno + backend <br>
 https://www.youtube.com/results?search_query=net+ninja+javascript -> tutorials mn dobri<br>

@@ -11,3 +11,7 @@ https://www.youtube.com/watch?v=hMxGhHNOkCU&list=PLoYCgNOIyGABdI2V8I_SWo22tFpgh2
 We used JavaScript: void(0) above to prevent the page from reloading when the button is clicked the first time.<br>
 
 
+<h2> How tos :</h2>
+<h3> Generate Pojo from Json</h3>
+http://www.jsonschema2pojo.org/<br>
+Video: https://www.youtube.com/watch?v=fxYyrbwECJ8

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Vnes vo input : 0439023483  0439358078-->
+    <meta charset="UTF-8">
+    <title>Kol2</title>
+    <script src="../../jquery.js"></script>
+    <script src="../../jquery-ui.js"></script>
+    <link rel="stylesheet" href="../../jquery-ui.css">
+    <script>
+  //Податоците за книгите се земаат со следниот повик кон API
+//https://openlibrary.org/api/books?bibkeys=ISBN:ISBN-БРОЈ-НАКНИГА&jscmd=details&callback=mycallback
+
+  $(document).ready(function () {
+
+      //console.log(isbn);
+
+      $("#btn").click( function () {
+           var isbn= $("#isbn").val();
+            console.log(isbn);
+            $.ajax({
+                url: "https://openlibrary.org/api/books?bibkeys=ISBN:" + isbn + "&jscmd=details&callback=mycallback",
+                dataType: "jsonP",
+                success: function (data) {
+                    console.log("success", data);
+
+                    //Object { "ISBN:0439023483": zatoa e data[]
+                    //isbn бројот со 13 цифри (isbn_13)
+                var isbn13 = data["ISBN:" +isbn].details.isbn_13;
+                    console.log(isbn13);
+                    //слика од нејзината насловна страница(thumbnail_url)
+                    var thumbnail_url = data["ISBN:"+isbn].thumbnail_url;
+                    console.log(thumbnail_url);
+                    // линк за дополнителни податоци (info_url)
+                    var info_url = data["ISBN:" + isbn].info_url;
+                    console.log(info_url);
+                    //и издавач/и (publishers).
+                    var publishers = data["ISBN:" + isbn].details.publishers;
+                    console.log(publishers);
+
+//По земањето на податоците за дадена книга,
+// во листата се додава нејзиниот наслов (title).
+//stavame klasa na listata i gi dodavame elementite: isbn13, thumbnail_url, info_url, publishers
+                    var listItem = $("<li class='listItem' thumbnail ='"+thumbnail_url+"' info='"+ info_url+"' publishers='"+ publishers +"' >" + data["ISBN:" + isbn].details.title + "</li>");
+                    console.log(listItem);
+                    $("#lista").append(listItem);
+                }
+            });
+
+//За промоција на страницата да се обезбедат линкови до социјалните медиуми
+     // (линковите и сликите се дадени во прилог на задачата)
+      $(document).on('click', 'li.listItem', function () {
+//isbn бројот со 13 цифри (isbn_13), слика од нејзината насловна страница (thumbnail_url), линк за дополнителни податоци (info_url) и издавач/и (publishers)
+//console.log($(this));
+          $("#info").show();
+          console.log(this);
+
+
+          $("#isbn13").html("");
+          $("#thumbnail_url").attr('src', "");
+          $("#info_url").html("");
+          $("#publishers").html("");
+
+          console.log(isbn);
+          console.log(info);
+
+          $("#isbn13").html("ISBN13 number: " + isbn);
+          $("#thumbnail_url").attr('src', $(this).attr("thumbnail")).css({
+              "width": "80px",
+              "height" : "100px"
+          });
+          $("#info_url").html("More infornation: <a href='"+  $(this).attr('info') + "'>" + $(this).attr('info') + "</a>");
+          $("#publishers").html("Publishers: <a href='" +$(this).attr('publishers')+ "'>" +$(this).attr('publishers')+ "</a>");
+
+      });
+      });
+
+  });
+    </script>
+    <style>
+        #lista {
+            float: left;
+
+            magrin-top: 60px;
+        }
+        #info {
+            margin-left: 350px;
+        }
+        #social {
+            margin-top:300px;
+            margin-left:350px;
+
+        }
+    </style>
+</head>
+<body>
+<h2>Books</h2>
+<!--Во текстуалното поле се внесуваат клучни зборови за пребарување-->
+<label>ISBN: </label><input type="text" id="isbn"  style="width: 150px" placeholder="Between 10 and 13 digits">
+<button id="btn">Add book</button>
+
+<ul id="lista">
+    <!--По земањето на податоците за
+дадена книга, во листата се додава нејзиниот наслов (title).-->
+</ul>
+<div id="info" style="display: none">
+    <!--isbn бројот со 13 цифри (isbn_13),
+    слика од нејзината насловна страница (thumbnail_url),
+     линк за дополнителни податоци (info_url)
+     и издавач/и (publishers)-->
+    <p id="isbn13"></p>
+    <img src="" id="thumbnail_url">
+    <p id="info_url"></p>
+    <p id="publishers"></p>
+</div>
+<!--За промоција на страницата да се обезбедат линкови до социјалните медиуми
+(линковите и сликите се дадени во прилог на задачата)-->
+<div id="social">
+    <a href="https://facebook.com"><img src="images/facebook.png" height="48" width="48"/></a>
+    <a href="#"><img src="images/digg.png" height="48" width="48"/></a>
+    <a href="#"><img src="images/delicious.png" height="48" width="48"/></a>
+    <a href="#"><img src="images/flickr.png" height="48" width="48"/></a>
+    <a href="#"><img src="images/linkedin.png" height="48" width="48"/></a>
+    <a href="#"><img src="images/reddit.png" height="48" width="48"/></a>
+    <a href="#"><img src="images/rss.png" height="48" width="48"/></a>
+    <a href="#"><img src="images/twitter.png" height="48" width="48"/></a>
+</div>
+
+</body>
+</html>
